@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bp82cwl26a8gj"]
+
+[ext_resource type="Texture2D" uid="uid://vwybi3ifwr14" path="res://Buildings.png" id="1_1af8x"]
+
+[node name="StageDoor" type="Area2D"]
+
+[node name="Buildings" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = ExtResource("1_1af8x")
+region_enabled = true
+region_rect = Rect2(272, 208, 128, 160)

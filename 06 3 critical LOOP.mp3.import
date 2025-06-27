@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://drx2k37yfm3gr"
+path="res://.godot/imported/06 3 critical LOOP.mp3-07b2978af3df20af34a0796922a0a969.mp3str"
+
+[deps]
+
+source_file="res://06 3 critical LOOP.mp3"
+dest_files=["res://.godot/imported/06 3 critical LOOP.mp3-07b2978af3df20af34a0796922a0a969.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://ocqxu3srcctg"]
+
+[ext_resource type="Script" uid="uid://dcto48v4uejvw" path="res://Script/enemy.gd" id="1_4gyqm"]
+[ext_resource type="Script" uid="uid://cc03y0pe832os" path="res://Script/StateMachine.gd" id="1_7k104"]
+[ext_resource type="Script" uid="uid://coo8safstkeub" path="res://Script/Hitbox.gd" id="2_qi2p4"]
+[ext_resource type="Script" uid="uid://beaaf3nmqdgrj" path="res://Script/Hurtbox.gd" id="3_iifgy"]
+[ext_resource type="Script" uid="uid://yl833kojtvdf" path="res://Script/Stats.gd" id="5_epg4t"]
+[ext_resource type="AudioStream" uid="uid://dpomujkdeu4jo" path="res://boar_hurt.mp3" id="6_3yqyl"]
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_4gyqm")
+
+[node name="Graphics" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Graphics"]
+
+[node name="HitBox" type="Area2D" parent="Graphics"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("2_qi2p4")
+metadata/_custom_type_script = "uid://coo8safstkeub"
+
+[node name="Hurtbox" type="Area2D" parent="Graphics"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("3_iifgy")
+metadata/_custom_type_script = "uid://beaaf3nmqdgrj"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="StateMachin" type="Node" parent="."]
+script = ExtResource("1_7k104")
+metadata/_custom_type_script = "uid://cc03y0pe832os"
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("5_epg4t")
+metadata/_custom_type_script = "uid://yl833kojtvdf"
+
+[node name="11HumanDamage3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_3yqyl")
+pitch_scale = 0.85
+panning_strength = 0.64

@@ -1,0 +1,89 @@
+[gd_scene load_steps=8 format=3 uid="uid://bf4del86jw7ln"]
+
+[ext_resource type="Texture2D" uid="uid://8gccav46vhub" path="res://HUD.png" id="1_2oycq"]
+[ext_resource type="Script" uid="uid://ijrqv3s7pjop" path="res://Script/knob.gd" id="2_ul44g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ul44g"]
+atlas = ExtResource("1_2oycq")
+region = Rect2(140, 252, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewfq5"]
+atlas = ExtResource("1_2oycq")
+region = Rect2(140, 108, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxvbu"]
+atlas = ExtResource("1_2oycq")
+region = Rect2(140, 156, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r20vs"]
+atlas = ExtResource("1_2oycq")
+region = Rect2(140, 60, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2oycq"]
+atlas = ExtResource("1_2oycq")
+region = Rect2(374, 6, 52, 52)
+
+[node name="VirtualJoypad" type="Control"]
+modulate = Color(1, 1, 1, 0.698039)
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -59.0
+offset_top = -73.0
+offset_right = -59.0
+offset_bottom = -73.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(1.04, 1.04)
+metadata/_edit_horizontal_guides_ = [143.0]
+
+[node name="Actions" type="Control" parent="."]
+anchors_preset = 0
+scale = Vector2(1.28, 1.28)
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Actions"]
+position = Vector2(-12, 4)
+scale = Vector2(1.04, 1.04)
+texture_normal = SubResource("AtlasTexture_ul44g")
+action = "jump"
+visibility_mode = 1
+
+[node name="TouchScreenButton2" type="TouchScreenButton" parent="Actions"]
+position = Vector2(-29, -12)
+scale = Vector2(1.04, 1.04)
+texture_normal = SubResource("AtlasTexture_ewfq5")
+action = "attack"
+visibility_mode = 1
+
+[node name="TouchScreenButton3" type="TouchScreenButton" parent="Actions"]
+position = Vector2(-12, -30)
+scale = Vector2(1.04, 1.04)
+texture_normal = SubResource("AtlasTexture_mxvbu")
+action = "attack"
+visibility_mode = 1
+
+[node name="TouchScreenButton4" type="TouchScreenButton" parent="Actions"]
+position = Vector2(7, -12)
+scale = Vector2(1.04, 1.04)
+texture_normal = SubResource("AtlasTexture_r20vs")
+action = "jump"
+visibility_mode = 1
+
+[node name="Stick" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+scale = Vector2(1.04, 1.04)
+
+[node name="Knob" type="TouchScreenButton" parent="Stick"]
+position = Vector2(-278.186, -25.2048)
+texture_normal = SubResource("AtlasTexture_2oycq")
+visibility_mode = 1
+script = ExtResource("2_ul44g")
+
+[connection signal="released" from="Stick/Knob" to="Stick/Knob" method="_on_released"]

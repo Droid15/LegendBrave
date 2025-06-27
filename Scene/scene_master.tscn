@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwcgl7vntn4aq"]
+
+[ext_resource type="Script" uid="uid://vx4umyn2s7qo" path="res://Script/scene_master.gd" id="1_b0qah"]
+[ext_resource type="Script" uid="uid://yl833kojtvdf" path="res://Script/Stats.gd" id="2_71ars"]
+[ext_resource type="PackedScene" uid="uid://cj0rtudxn47e7" path="res://Scene/items.tscn" id="2_jrook"]
+[ext_resource type="AudioStream" uid="uid://cva25u1lro35k" path="res://08_human_charge_1.wav" id="4_41yku"]
+
+[node name="SceneMaster" type="CanvasLayer"]
+layer = 99
+script = ExtResource("1_b0qah")
+items_tsc = ExtResource("2_jrook")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("2_71ars")
+metadata/_custom_type_script = "uid://yl833kojtvdf"
+
+[node name="AudioNode" type="Node2D" parent="."]
+
+[node name="HumanCharge1" type="AudioStreamPlayer" parent="AudioNode"]
+stream = ExtResource("4_41yku")
+volume_db = -12.0
