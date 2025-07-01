@@ -65,6 +65,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("move_right"):
 		hit_box.scale.x = 1
 func tick_physics(state: State, delta: float) -> void:
+	#更新实时玩家坐标
+	SceneMaster.player_pos = position
 	
 	#处于无敌时间，身体闪烁效果
 	if invincible_timer.time_left >0:
@@ -224,7 +226,11 @@ func transition_state(form: State, to: State) -> void:
 
 
 func _on_hurtbox_hurt(hitbox: HitBox) -> void:
-	#print("payer受伤了")
+	var enemy_bee: = hitbox.find_parent("Enemybee*")
+	if enemy_bee:
+		print("payer受伤了 %s 打的" % enemy_bee.name)
+		enemy_bee.queue_free()
+		
 	#无敌计时器未结束
 	if invincible_timer.time_left > 0:
 		return

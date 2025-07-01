@@ -13,6 +13,9 @@ var fall_rate := 1.0
 #地震恢复速度
 var recover_speed := 16.0
 
+#玩家坐标
+var player_pos: Vector2
+
 func _ready() -> void:
 	color_rect.color.a = 0
 
@@ -81,13 +84,36 @@ func droppedItem(position: Vector2, item_name := "") -> void:
 				set_item = s_item
 		else:
 			#随机掉落物品
-			set_item = items.get_node("ItemBox").get_children().pick_random()
-			if stats.stageKey and set_item.name=="Key":
+			var rate_drop = randf()
+			print("掉落概率:", rate_drop)
+			if rate_drop < 0.1:
+				set_item = items.get_node("ItemBox").get_node("Key")
+				
+			if rate_drop > 0.1 and rate_drop <= 0.8:
+				set_item = items.get_node("ItemBox").get_node("Coin_v1")
+			
+			if rate_drop > 0.8:
+				set_item = items.get_node("ItemBox").get_node("Coin_v2")
+			
+			if stats.health < 3 and rate_drop > 0.95:
 				set_item = items.get_node("ItemBox").get_node("Potion_v1")
 				
+			if stats.health < 2 and rate_drop > 0.95:
+				set_item = items.get_node("ItemBox").get_node("Potion_v2")
+			
+			if stats.stageKey and set_item.name=="Key":
+				set_item = items.get_node("ItemBox").get_node("Coin_v2")
+				set_item.scale *= 3
+			#set_item = items.get_node("ItemBox").get_children().pick_random()
 		set_item.visible = true
 		items.set_key_name = set_item.name
 		print("物品掉落:", set_item.name)
+		
+		#除了钥匙以外的物品10秒后自动销毁
+		if items.set_key_name != "Key":
+			await get_tree().create_timer(10).timeout
+			if set_item:
+				items.queue_free()
 		
 #相机震动
 func quake(rate: float, delta: float) -> void:

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvcvxmg51bexh"]
+
+[ext_resource type="Texture2D" uid="uid://fap4vl4v2fso" path="res://Tiles.png" id="1_0fnvj"]
+[ext_resource type="Script" uid="uid://dmws1giy6so3x" path="res://Scene/honeycomb.gd" id="1_uxby8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uxby8"]
+size = Vector2(34, 53)
+
+[node name="honeycomb" type="Area2D"]
+script = ExtResource("1_uxby8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0fnvj")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(192, 104, 32, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5.5)
+shape = SubResource("RectangleShape2D_uxby8")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

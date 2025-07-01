@@ -30,7 +30,7 @@ func _on_body_enterd(body: Player) -> void:
 		SceneMaster.stats.score += 2
 		
 	if set_key_name == "Coin_v2":
-		SceneMaster.stats.score += 5
+		SceneMaster.stats.score += 10
 		
 	if set_key_name == "Key":
 		#print("吃到钥匙")
