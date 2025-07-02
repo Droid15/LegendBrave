@@ -113,13 +113,17 @@ func droppedItem(position: Vector2, item_name := "") -> void:
 		items.set_key_name = set_item.name
 		print("物品掉落:", set_item.name)
 		
+		#增加item子节点时应该避免在不安全的时间点进行状态更改，所以使用call_deferred
+		#get_tree().current_scene.add_child(items)
+		get_tree().current_scene.call_deferred("add_child", items)
+		
 		#除了钥匙以外的物品10秒后自动销毁
 		if items.set_key_name != "Key":
 			await get_tree().create_timer(10).timeout
 			if set_item:
+				#items.call_deferred("queue_free")
 				items.queue_free()
 				
-		get_tree().current_scene.add_child(items)
 		
 #相机震动
 func quake(rate: float, delta: float) -> void:
