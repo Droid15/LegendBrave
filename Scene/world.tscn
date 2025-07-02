@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://c3cb1vb0ngx8a"]
+[gd_scene load_steps=20 format=4 uid="uid://c3cb1vb0ngx8a"]
 
 [ext_resource type="Texture2D" uid="uid://8jekgmayjfj6" path="res://Tree-Assets.png" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://b32qdgdoml6s3" path="res://Script/world.gd" id="1_tlwt5"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://g63v5gcescix" path="res://Scene/player.tscn" id="11_6a5p4"]
 [ext_resource type="PackedScene" uid="uid://bp82cwl26a8gj" path="res://Scene/stage_door.tscn" id="11_ic0uy"]
 [ext_resource type="PackedScene" uid="uid://cd8dxwjyrobet" path="res://Scene/snail.tscn" id="12_nka0b"]
+[ext_resource type="PackedScene" uid="uid://uvekcy5gp7cg" path="res://Scene/item_box.tscn" id="13_0gfnl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fj7yv"]
 texture = ExtResource("1_f3sb7")
@@ -672,3 +673,7 @@ editor_draw_drag_margin = true
 
 [node name="Snail" parent="." instance=ExtResource("12_nka0b")]
 position = Vector2(100, -117)
+
+[node name="item_box" parent="." instance=ExtResource("13_0gfnl")]
+position = Vector2(575, 118)
+set_item = "Potion_v1"

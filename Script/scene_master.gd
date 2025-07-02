@@ -74,7 +74,6 @@ func droppedItem(position: Vector2, item_name := "") -> void:
 		var items =  items_tsc.instantiate()
 		items.position = position
 		items.position.y -= 16
-		get_tree().current_scene.add_child(items)
 		var set_item: Node
 		
 		#手动指定掉落物品
@@ -107,6 +106,8 @@ func droppedItem(position: Vector2, item_name := "") -> void:
 			if stats.stageKey and set_item.name=="Key":
 				set_item = items.get_node("ItemBox").get_node("Coin_v2")
 				set_item.scale *= 3
+		#if not set_item:
+			#print("概率失效，随机掉落")
 			#set_item = items.get_node("ItemBox").get_children().pick_random()
 		set_item.visible = true
 		items.set_key_name = set_item.name
@@ -117,6 +118,8 @@ func droppedItem(position: Vector2, item_name := "") -> void:
 			await get_tree().create_timer(10).timeout
 			if set_item:
 				items.queue_free()
+				
+		get_tree().current_scene.add_child(items)
 		
 #相机震动
 func quake(rate: float, delta: float) -> void:
