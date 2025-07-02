@@ -48,7 +48,7 @@ func get_next_state(state: State) -> int:
 		return State.FALL
 	#受伤
 	if pending_damage:
-		print("damage debug....")
+		#print("damage debug....")
 		damage_limit +=1
 		if damage_limit > 60:
 			damage_limit = 0

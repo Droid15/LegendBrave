@@ -66,7 +66,7 @@ func get_next_state(state: State) -> int:
 		return StateMachin.KEEP_CURRENT if state==State.DYING else State.DYING
 		
 	if pending_damage:
-		print(stats.health)
+		#print(stats.health)
 		return State.HIT
 
 	return State.FLY

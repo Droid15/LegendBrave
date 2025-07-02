@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cj0rtudxn47e7"]
+[gd_scene load_steps=9 format=3 uid="uid://cj0rtudxn47e7"]
 
 [ext_resource type="Script" uid="uid://cup2bx2eju7da" path="res://Script/items.gd" id="1_u5wui"]
 [ext_resource type="AudioStream" uid="uid://cva25u1lro35k" path="res://08_human_charge_1.wav" id="2_aa2cp"]
+[ext_resource type="Texture2D" uid="uid://bfkqrxcwuylye" path="res://char_blue_1.png" id="3_2kera"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aa2cp"]
 size = Vector2(12, 39)
@@ -65,3 +66,10 @@ scale = Vector2(1.5, 1.5)
 texture = SubResource("CompressedTexture2D_nudqs")
 region_enabled = true
 region_rect = Rect2(243, 338, 10, 11)
+
+[node name="Skill_v1" type="Sprite2D" parent="ItemBox" groups=["items_box"]]
+visible = false
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_2kera")
+region_enabled = true
+region_rect = Rect2(176, 452, 14, 19)

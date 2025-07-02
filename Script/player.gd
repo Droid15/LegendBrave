@@ -10,7 +10,8 @@ enum State {
 	ATTACK_2,
 	ATTACK_3,
 	HURT,
-	DYING
+	DYING,
+	SKILL
 }
 
 #站在地板上的动作组
@@ -22,6 +23,9 @@ const JUMP_VELOCITY: = -320.0
 const KNOCKBACK_AMOUNT := 312.0
 #是否连击
 @export var can_combo := false
+
+#技能时间
+@export var skill_time := false
 
 var gravity := ProjectSettings.get("physics/2d/default_gravity") as float
 var is_first_tick := false
@@ -48,6 +52,20 @@ var fall_step := 0
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if SceneMaster.stats.health == 0:
+		print("死亡时不能操作")
+		return 
+	#监听技能释放
+	if event.is_action_pressed("skill") and skill_time==false:
+		if use_skill():
+			skill_time = true
+			await get_tree().create_timer(2).timeout
+			skill_time = false
+			
+	if skill_time:
+		print("技能释放时间，禁止其他输入")
+		return
+		
 	if event.is_action_released("jump"):
 		if velocity.y < JUMP_VELOCITY / 2:
 			velocity.y = JUMP_VELOCITY / 2
@@ -64,10 +82,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	if event.is_action_pressed("move_right"):
 		hit_box.scale.x = 1
+			
 func tick_physics(state: State, delta: float) -> void:
 	#更新实时玩家坐标
 	SceneMaster.player_pos = position
 	
+	#技能震动
+	if skill_time:
+		SceneMaster.quake(2, delta)
+		
 	#处于无敌时间，身体闪烁效果
 	if invincible_timer.time_left >0:
 		modulate.a = sin(Time.get_ticks_msec()/20) * 0.5 + 0.5
@@ -92,7 +115,7 @@ func tick_physics(state: State, delta: float) -> void:
 		State.ATTACK_1,State.ATTACK_3,State.ATTACK_3:
 			stand(gravity, delta)
 			
-		State.HURT, State.DYING:
+		State.HURT, State.DYING, State.SKILL:
 			stand(gravity, delta)
 			
 	is_first_tick = false
@@ -121,9 +144,14 @@ func die() -> void:
 	get_tree().reload_current_scene()
 	health_reset()
 	score_reset()
+	skill_reset()
 	
 func get_next_state(state: State) -> State:
 	
+	#站在地上不是掉落状态, 技能状态
+	if state in GROUND_STATES and is_on_floor() and skill_time:
+		return State.SKILL
+		
 	#判断应该坠落的状态
 	if state in GROUND_STATES and not is_on_floor():
 		fall_step = 0
@@ -137,7 +165,7 @@ func get_next_state(state: State) -> State:
 	#受伤
 	if pending_damage:
 		return State.HURT
-		
+			
 	var diraction := Input.get_axis("move_left", "move_right")
 	var is_still := is_zero_approx(diraction) and is_zero_approx(velocity.x)
 	match state:
@@ -178,6 +206,10 @@ func get_next_state(state: State) -> State:
 		State.HURT:
 			if not animation_player.is_playing():
 				return State.IDLE
+		State.SKILL:
+			if not skill_time:
+				return State.IDLE
+				
 	return StateMachin.KEEP_CURRENT
 
 func transition_state(form: State, to: State) -> void:
@@ -222,6 +254,10 @@ func transition_state(form: State, to: State) -> void:
 			animation_player.play("die")
 			invincible_timer.stop()
 			$GameOver.play()
+		
+		State.SKILL:
+			animation_player.play("skill")
+			
 	is_first_tick = true
 
 
@@ -246,4 +282,21 @@ func health_reset() -> void:
 	stats.health = 3
 	
 func score_reset() -> void:
-	stats.score = 0;
+	stats.score = 0
+	
+func skill_reset() -> void:
+	stats.skill = 0
+	
+#使用技能
+func use_skill() -> bool:
+	if stats.skill==0:
+		print("没有技能点")
+		return false
+	invincible_timer.start()
+	stats.skill -= 1
+	var all_enemy = get_tree().current_scene.find_children("Enemy*")
+	for enemy in all_enemy:
+		if enemy.stats and enemy.stats.health:
+			enemy.stats.health -= 3
+	$Skill_HumanCharge2.play()
+	return true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bs700bhxb6jhs"]
+[gd_scene load_steps=11 format=3 uid="uid://bs700bhxb6jhs"]
 
 [ext_resource type="Script" uid="uid://dks8ktp5bvrpo" path="res://Script/status_panel.gd" id="1_be0lv"]
 [ext_resource type="Texture2D" uid="uid://8gccav46vhub" path="res://HUD.png" id="2_885s2"]
@@ -29,6 +29,10 @@ region = Rect2(308, 118, 56, 4)
 atlas = ExtResource("4_885s2")
 region = Rect2(238, 322, 20, 9)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_110vu"]
+atlas = ExtResource("3_v4ios")
+region = Rect2(176, 452, 15, 20)
+
 [node name="StatusPanel" type="HBoxContainer"]
 custom_minimum_size = Vector2(0.79, 1.555)
 offset_right = 13.0
@@ -56,7 +60,22 @@ texture_progress = SubResource("AtlasTexture_02lie")
 texture_progress_offset = Vector2(1, 1)
 
 [node name="Skey" type="TextureRect" parent="."]
-visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_v4ios")
 stretch_mode = 4
+
+[node name="SkillLayer" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = SubResource("AtlasTexture_110vu")
+stretch_mode = 2
+
+[node name="Skill_count" type="Label" parent="SkillLayer"]
+layout_mode = 2
+offset_left = 17.0
+offset_top = 3.0
+offset_right = 34.0
+offset_bottom = 20.0
+theme_override_font_sizes/font_size = 12
+text = "x 1"

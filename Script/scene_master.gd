@@ -21,7 +21,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	#f12地震
-	if Input.is_action_pressed("f12"):
+	if not OS.has_feature("template") and Input.is_action_pressed("f12"):
 		quake(4, delta)
 	
 func _physics_process(delta: float) -> void:
@@ -101,6 +101,9 @@ func droppedItem(position: Vector2, item_name := "") -> void:
 			if stats.health < 2 and rate_drop > 0.95:
 				set_item = items.get_node("ItemBox").get_node("Potion_v2")
 			
+			if rate_drop > 0.986:
+				set_item = items.get_node("ItemBox").get_node("Skill_v1")
+				
 			if stats.stageKey and set_item.name=="Key":
 				set_item = items.get_node("ItemBox").get_node("Coin_v2")
 				set_item.scale *= 3

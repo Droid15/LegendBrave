@@ -12,6 +12,7 @@ enum State {
 
 var pending_damage: Damage
 const KNOCKBACK_AMOUNT := 512.0
+var damage_limit := 0
 
 @onready var wall_checker: RayCast2D = $Graphics/WallChecker
 @onready var player_checker: RayCast2D = $Graphics/PlayerChecker
@@ -46,8 +47,14 @@ func get_next_state(state: State) -> int:
 	#判断应该坠落的状态
 	if not is_on_floor():
 		return State.FALL
-	#受伤
+		
 	if pending_damage:
+		#print("damage debug....")
+		damage_limit +=1
+		if damage_limit > 60:
+			damage_limit = 0
+			#print("死循环了....%s" % damage_limit)
+			return State.WALK
 		return State.HURT
 		
 	#视线看到玩家
