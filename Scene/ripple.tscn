@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://drp4enx6salkj"]
+
+[ext_resource type="Script" uid="uid://dd8cnuaqdtab7" path="res://Scene/ripple.gd" id="1_dpfgc"]
+[ext_resource type="Texture2D" uid="uid://fap4vl4v2fso" path="res://Tiles.png" id="1_s7iq2"]
+
+[node name="ripple" type="Node2D"]
+script = ExtResource("1_dpfgc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.03, 1.03)
+texture = ExtResource("1_s7iq2")
+region_enabled = true
+region_rect = Rect2(98, 300, 62, 36)
+
+[node name="AnimationLabel" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Instructions" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0

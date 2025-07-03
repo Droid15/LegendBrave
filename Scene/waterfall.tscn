@@ -123,16 +123,6 @@ vframes = 4
 region_enabled = true
 region_rect = Rect2(48, 273, 48, 64)
 
-[node name="AnimationLabel" type="Label" parent="."]
-visible = false
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Instructions" type="Label" parent="."]
-visible = false
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_2csy0")
