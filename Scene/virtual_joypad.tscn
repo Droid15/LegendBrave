@@ -62,7 +62,7 @@ visibility_mode = 1
 position = Vector2(-12, -30)
 scale = Vector2(1.04, 1.04)
 texture_normal = SubResource("AtlasTexture_mxvbu")
-action = "attack"
+action = "skill"
 visibility_mode = 1
 
 [node name="TouchScreenButton4" type="TouchScreenButton" parent="Actions"]

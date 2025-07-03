@@ -3,6 +3,7 @@ extends Node
 @onready var stats: Stats = $Stats
 @export var items_tsc: PackedScene
 @onready var human_charge_1: AudioStreamPlayer = $AudioNode/HumanCharge1
+@export var bee_tsc:PackedScene
 
 #玩家分数
 var score := 0
@@ -15,6 +16,11 @@ var recover_speed := 16.0
 
 #玩家坐标
 var player_pos: Vector2
+
+#技能冷却时间(s)
+var skill_cooldown := 3
+
+var bee_await:bool = false
 
 func _ready() -> void:
 	color_rect.color.a = 0
@@ -105,7 +111,8 @@ func droppedItem(position: Vector2, item_name := "") -> void:
 				
 			if stats.stageKey and set_item.name=="Key":
 				set_item = items.get_node("ItemBox").get_node("Coin_v2")
-				set_item.scale *= 3
+				#set_item.scale = 3
+				set_item.set_deferred("scale",3)
 		#if not set_item:
 			#print("概率失效，随机掉落")
 			#set_item = items.get_node("ItemBox").get_children().pick_random()
@@ -136,3 +143,14 @@ func quake(rate: float, delta: float) -> void:
 			randf_range(-rate, rate)
 		)
 		rate = move_toward(rate, 0, recover_speed * delta)
+		
+#生产蜜蜂
+func spawn_bee(pos: Vector2) -> void:
+	if bee_await:
+		print("蜜蜂等待...")
+		return
+	var bee := bee_tsc.instantiate()
+	#bee.position = honeycomb.position
+	bee.position = pos
+	bee.name = "Enemybee"+ str(randf_range(1,9999999))
+	get_tree().current_scene.add_child(bee)

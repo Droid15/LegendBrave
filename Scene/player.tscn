@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://g63v5gcescix"]
+[gd_scene load_steps=32 format=3 uid="uid://g63v5gcescix"]
 
 [ext_resource type="Texture2D" uid="uid://bfkqrxcwuylye" path="res://char_blue_1.png" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://c4cs2r4qb00j" path="res://Script/player.gd" id="1_onrkg"]
@@ -8,9 +8,10 @@
 [ext_resource type="Script" uid="uid://coo8safstkeub" path="res://Script/Hitbox.gd" id="6_2hs0m"]
 [ext_resource type="PackedScene" uid="uid://bs700bhxb6jhs" path="res://Scene/status_panel.tscn" id="8_dw050"]
 [ext_resource type="AudioStream" uid="uid://cgodawf64l4kj" path="res://07_human_atk_sword_1.wav" id="9_b26j0"]
+[ext_resource type="Texture2D" uid="uid://8gccav46vhub" path="res://HUD.png" id="9_fn0wv"]
 [ext_resource type="PackedScene" uid="uid://bf4del86jw7ln" path="res://Scene/virtual_joypad.tscn" id="9_ivps1"]
 [ext_resource type="AudioStream" uid="uid://bwlxlg1na53ik" path="res://12_human_jump_1.wav" id="10_n7ghd"]
-[ext_resource type="AudioStream" uid="uid://bxiydrjp2t8h7" path="res://16_human_walk_stone_1.wav" id="11_nvl01"]
+[ext_resource type="AudioStream" uid="uid://c833f13x1g20j" path="res://Scene/Running.mp3" id="12_fn0wv"]
 [ext_resource type="AudioStream" uid="uid://cva25u1lro35k" path="res://08_human_charge_1.wav" id="13_bwjto"]
 [ext_resource type="AudioStream" uid="uid://d3ex5krtjj26r" path="res://GameOver.mp3" id="13_urp6f"]
 [ext_resource type="AudioStream" uid="uid://b4ltdirvpb2ec" path="res://man_hurt.mp3" id="14_bwjto"]
@@ -19,6 +20,10 @@
 script/source = "class_name StateMachine
 extends Sprite2D
 "
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqmt2"]
+atlas = ExtResource("9_fn0wv")
+region = Rect2(243, 203, 58, 26)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(10, 28.5)
@@ -181,10 +186,10 @@ tracks/2/path = NodePath("Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.03, 0.06, 0.09, 0.14, 0.16),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.03, 0.06, 0.09, 0.12, 0.14, 0.16),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5]
+"values": [0, 1, 2, 3, 3, 4, 5]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -877,6 +882,26 @@ region_enabled = true
 region_rect = Rect2(0, 0, 336, 56)
 script = SubResource("GDScript_onrkg")
 
+[node name="tips" type="TextureRect" parent="Sprite2D"]
+visible = false
+modulate = Color(1, 1, 1, 0.458824)
+offset_left = -12.5503
+offset_top = -32.8715
+offset_right = 45.4497
+offset_bottom = -6.87148
+scale = Vector2(0.575, 0.575)
+texture = SubResource("AtlasTexture_eqmt2")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Sprite2D/tips"]
+layout_mode = 0
+offset_right = 56.0
+offset_bottom = 25.0
+text = "key?"
+fit_content = true
+horizontal_alignment = 1
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, -28.25)
 shape = SubResource("RectangleShape2D_onrkg")
@@ -951,8 +976,9 @@ stream = ExtResource("9_b26j0")
 stream = ExtResource("10_n7ghd")
 
 [node name="Walk" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("11_nvl01")
-pitch_scale = 1.99
+stream = ExtResource("12_fn0wv")
+volume_db = -6.303
+pitch_scale = 1.35
 
 [node name="GameOver" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_urp6f")

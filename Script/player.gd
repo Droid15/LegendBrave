@@ -59,8 +59,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("skill") and skill_time==false:
 		if use_skill():
 			skill_time = true
+			SceneMaster.bee_await = true
 			await get_tree().create_timer(2).timeout
 			skill_time = false
+			
+			await get_tree().create_timer(3).timeout
+			SceneMaster.bee_await = false
 			
 	if skill_time:
 		print("技能释放时间，禁止其他输入")
@@ -213,12 +217,16 @@ func get_next_state(state: State) -> State:
 	return StateMachin.KEEP_CURRENT
 
 func transition_state(form: State, to: State) -> void:
+	if form == State.RUNING:
+		walk.stop()
 	match to:
 		State.IDLE:
 			animation_player.play("idle")
 			
 		State.RUNING:
 			animation_player.play("runing")
+			if walk.finished:
+				walk.play()
 		State.JUMP:
 			animation_player.play("jump")
 			jump.play()
