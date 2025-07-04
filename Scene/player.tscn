@@ -867,9 +867,10 @@ _data = {
 size = Vector2(13.5, 29)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1jxqw"]
-size = Vector2(25.5, 27)
+size = Vector2(25.5, 9.5)
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 1
 collision_layer = 2
 script = ExtResource("1_onrkg")
 
@@ -933,7 +934,7 @@ script = ExtResource("6_2hs0m")
 metadata/_custom_type_script = "uid://coo8safstkeub"
 
 [node name="AttackShape" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(17.25, -33)
+position = Vector2(17.25, -30.25)
 shape = SubResource("RectangleShape2D_1jxqw")
 disabled = true
 
@@ -942,7 +943,7 @@ position = Vector2(8, -29)
 shape = SubResource("RectangleShape2D_1jxqw")
 
 [node name="AttackShape3" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(18.5, -33.5)
+position = Vector2(18.5, -27.5)
 shape = SubResource("RectangleShape2D_1jxqw")
 disabled = true
 
@@ -978,7 +979,7 @@ stream = ExtResource("10_n7ghd")
 [node name="Walk" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_fn0wv")
 volume_db = -6.303
-pitch_scale = 1.35
+pitch_scale = 0.9
 
 [node name="GameOver" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_urp6f")
