@@ -8,7 +8,7 @@ uniform float glitch_intensity = 0.05;
 
 void fragment() {
 	vec2 uv = UV;
-	
+
 	// 应用不同的效果
 	if (effect_intensity > 0.0) {
 		if (effect_type == 0) { // 扫描线效果
@@ -33,20 +33,20 @@ void fragment() {
 		else if (effect_type == 3) { // 像素故障
 			float pixel_size = 64.0;
 			uv = floor(uv * pixel_size) / pixel_size;
-			
+
 			// 添加随机偏移
 			float offset_x = sin(time * 10.0 + uv.y * 20.0) * glitch_intensity;
 			float offset_y = cos(time * 8.0 + uv.x * 15.0) * glitch_intensity * 0.5;
-			
+
 			// 分离RGB通道
 			vec2 r_uv = uv + vec2(offset_x * 0.02, offset_y * 0.01);
 			vec2 g_uv = uv + vec2(offset_x * -0.01, offset_y * -0.02);
 			vec2 b_uv = uv + vec2(offset_x * 0.03, offset_y * -0.01);
-			
+
 			float r = texture(TEXTURE, r_uv).r;
 			float g = texture(TEXTURE, g_uv).g;
 			float b = texture(TEXTURE, b_uv).b;
-			
+
 			COLOR = vec4(r, g, b, 1.0);
 		}
 		else if (effect_type == 4) { // 闪烁效果
@@ -56,12 +56,12 @@ void fragment() {
 		else if (effect_type == 5) { // 颜色循环
 			vec4 tex_color = texture(TEXTURE, uv);
 			float hue_shift = time;
-			
+
 			// RGB转HSV
 			float max_val = max(tex_color.r, max(tex_color.g, tex_color.b));
 			float min_val = min(tex_color.r, min(tex_color.g, tex_color.b));
 			float delta = max_val - min_val;
-			
+
 			float hue = 0.0;
 			if (delta > 0.0) {
 				if (max_val == tex_color.r) {
@@ -73,14 +73,14 @@ void fragment() {
 				}
 				hue = fract((hue / 6.0 + hue_shift) * effect_intensity);
 			}
-			
+
 			// HSV转RGB
 			float h_i = floor(hue * 6.0);
 			float f = hue * 6.0 - h_i;
 			float p = max_val * (1.0 - effect_intensity * 0.5);
 			float q = max_val * (1.0 - f * effect_intensity * 0.5);
 			float t = max_val * (1.0 - (1.0 - f) * effect_intensity * 0.5);
-			
+
 			vec3 rgb;
 			if (h_i == 0.0) rgb = vec3(max_val, t, p);
 			else if (h_i == 1.0) rgb = vec3(q, max_val, p);
@@ -88,13 +88,13 @@ void fragment() {
 			else if (h_i == 3.0) rgb = vec3(p, q, max_val);
 			else if (h_i == 4.0) rgb = vec3(t, p, max_val);
 			else rgb = vec3(max_val, p, q);
-			
+
 			COLOR = vec4(mix(tex_color.rgb, rgb, effect_intensity), tex_color.a);
 		}
 	} else {
 		COLOR = texture(TEXTURE, uv);
 	}
-	
+
 	// 添加像素风效果
 	vec2 pixel_size = vec2(1.0) / vec2(textureSize(TEXTURE, 0));
 	vec2 pixel_uv = floor(uv / pixel_size) * pixel_size;

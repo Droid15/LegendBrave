@@ -33,7 +33,7 @@ var is_combo_requested := false
 var pending_damage: Damage
 
 #记录跌落距离
-var fall_step := 0
+#var fall_step := 0
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -158,7 +158,7 @@ func get_next_state(state: State) -> State:
 		
 	#判断应该坠落的状态
 	if state in GROUND_STATES and not is_on_floor():
-		fall_step = 0
+		#fall_step = 0
 		
 		return State.FALL
 	
@@ -189,12 +189,12 @@ func get_next_state(state: State) -> State:
 				return State.FALL
 				
 		State.FALL:
-			fall_step += 1
+			#fall_step += 1
 			if is_on_floor():
 				#跌落扣血
-				if fall_step > 50:
-					_on_hurtbox_hurt(hit_box)
-				fall_step = 0
+				#if fall_step > 50:
+					#_on_hurtbox_hurt(hit_box)
+				#fall_step = 0
 				return State.IDLE if is_still else State.RUNING
 		State.ATTACK_1:
 			if not animation_player.is_playing():

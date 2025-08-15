@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://g63v5gcescix"]
+[gd_scene load_steps=36 format=3 uid="uid://g63v5gcescix"]
 
 [ext_resource type="Texture2D" uid="uid://bfkqrxcwuylye" path="res://char_blue_1.png" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://c4cs2r4qb00j" path="res://Script/player.gd" id="1_onrkg"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://cgodawf64l4kj" path="res://07_human_atk_sword_1.wav" id="9_b26j0"]
 [ext_resource type="Texture2D" uid="uid://8gccav46vhub" path="res://HUD.png" id="9_fn0wv"]
 [ext_resource type="PackedScene" uid="uid://bf4del86jw7ln" path="res://Scene/virtual_joypad.tscn" id="9_ivps1"]
+[ext_resource type="Script" uid="uid://c4haa0cfae30i" path="res://Script/set_btn.gd" id="10_eqmt2"]
 [ext_resource type="AudioStream" uid="uid://bwlxlg1na53ik" path="res://12_human_jump_1.wav" id="10_n7ghd"]
 [ext_resource type="AudioStream" uid="uid://c833f13x1g20j" path="res://Scene/Running.mp3" id="12_fn0wv"]
 [ext_resource type="AudioStream" uid="uid://cva25u1lro35k" path="res://08_human_charge_1.wav" id="13_bwjto"]
@@ -869,6 +870,18 @@ size = Vector2(13.5, 29)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1jxqw"]
 size = Vector2(25.5, 9.5)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_c40dt"]
+atlas = ExtResource("9_fn0wv")
+region = Rect2(48, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgjog"]
+atlas = ExtResource("9_fn0wv")
+region = Rect2(243, 107, 58, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhccw"]
+atlas = ExtResource("9_fn0wv")
+region = Rect2(243, 11, 58, 26)
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 collision_layer = 2
@@ -970,6 +983,70 @@ offset_bottom = 29.0
 scale = Vector2(0.595, 0.595)
 text = "Score: 0"
 
+[node name="Setting" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 339.0
+offset_top = 5.0
+offset_right = 379.0
+offset_bottom = 45.0
+
+[node name="set_btn" type="TouchScreenButton" parent="CanvasLayer/Setting"]
+z_index = 99
+position = Vector2(12, 4)
+texture_normal = SubResource("AtlasTexture_c40dt")
+script = ExtResource("10_eqmt2")
+
+[node name="set_panel" type="HBoxContainer" parent="CanvasLayer"]
+visible = false
+show_behind_parent = true
+z_index = 99
+clip_contents = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.0
+offset_top = -6.0
+offset_right = 66.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="restart" type="TouchScreenButton" parent="CanvasLayer/set_panel"]
+modulate = Color(0.329412, 0.741176, 0.415686, 0.839216)
+z_index = 99
+position = Vector2(13, 2)
+texture_normal = SubResource("AtlasTexture_lgjog")
+
+[node name="Label" type="Label" parent="CanvasLayer/set_panel/restart"]
+modulate = Color(1, 0.380392, 0.360784, 1)
+offset_left = 7.0
+offset_top = 6.0
+offset_right = 71.0
+offset_bottom = 29.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "重新开始"
+
+[node name="exit" type="TouchScreenButton" parent="CanvasLayer/set_panel"]
+z_index = 99
+position = Vector2(88, 2)
+texture_normal = SubResource("AtlasTexture_lhccw")
+
+[node name="Label" type="Label" parent="CanvasLayer/set_panel/exit"]
+modulate = Color(1, 0.380392, 0.360784, 1)
+offset_left = 8.0
+offset_top = 6.0
+offset_right = 56.0
+offset_bottom = 29.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "退出游戏"
+
 [node name="Attack1" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_b26j0")
 
@@ -999,3 +1076,6 @@ volume_db = -20.348
 pitch_scale = 1.35
 
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="pressed" from="CanvasLayer/Setting/set_btn" to="CanvasLayer/Setting/set_btn" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer/set_panel/restart" to="CanvasLayer/Setting/set_btn" method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/set_panel/exit" to="CanvasLayer/Setting/set_btn" method="_on_exit_pressed"]
