@@ -53,7 +53,7 @@ var pending_damage: Damage
 
 func _unhandled_input(event: InputEvent) -> void:
 	if SceneMaster.stats.health == 0:
-		print("死亡时不能操作")
+		#print("死亡时不能操作")
 		return 
 	#监听技能释放
 	if event.is_action_pressed("skill") and skill_time==false:
@@ -303,8 +303,11 @@ func use_skill() -> bool:
 	invincible_timer.start()
 	stats.skill -= 1
 	var all_enemy = get_tree().current_scene.find_children("Enemy*")
+	#var camera = get_tree().current_scene.find_child("Camera2D")
 	for enemy in all_enemy:
-		if enemy.stats and enemy.stats.health:
-			enemy.stats.health -= 3
+		#if SceneMaster.is_node_visible_in_camera(enemy, camera):
+		if SceneMaster.is_on_screen(enemy):
+			if enemy.stats and enemy.stats.health:
+				enemy.stats.health -= 3
 	$Skill_HumanCharge2.play()
 	return true

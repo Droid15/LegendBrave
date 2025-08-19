@@ -16,6 +16,8 @@ var player_position:Vector2
 #蜜蜂飞行速度
 var bee_speed := 100
 const max_bee_speed := 200
+#蜜蜂咬玩家的位置偏移
+var offset := 5 
 
 @onready var calm_down_timer: Timer = $CalmDownTimer
 	
@@ -29,12 +31,17 @@ func tick_physics(state: State, delta: float) -> void:
 			SceneMaster.player_pos.y = SceneMaster.player_pos.y - 26
 			if SceneMaster.player_pos.x > position.x:
 				direction = Direction.RIGHT
+				offset = -5
 			else:
 				direction = Direction.LEFT
+				offset = 5
 			#靠近玩家就加速
 			if abs(SceneMaster.player_pos.x - position.x)<66 and abs(SceneMaster.player_pos.y-position.y)<60:
 				bee_speed = max_bee_speed
-			global_position = global_position.move_toward(SceneMaster.player_pos, bee_speed * delta)
+			global_position = global_position.move_toward(
+				Vector2(SceneMaster.player_pos.x + offset, SceneMaster.player_pos.y), 
+				bee_speed * delta
+			)
 		State.ATTACK:
 			pass
 	#animation_player.play("fly")

@@ -154,3 +154,35 @@ func spawn_bee(pos: Vector2) -> void:
 	bee.position = pos
 	bee.name = "Enemybee"+ str(randf_range(1,9999999))
 	get_tree().current_scene.add_child(bee)
+	
+# 检查 2D 节点是否在相机视野内
+func is_node_visible_in_camera(node: Node2D, camera: Camera2D) -> bool:
+	var node_global_pos = node.global_position
+	# 将节点位置转换为相机局部坐标
+	var node_in_cam_space = camera.global_transform.affine_inverse() * node_global_pos
+	
+	# 获取相机视口矩形（考虑缩放）
+	var viewport_rect = camera.get_viewport_rect()
+	var zoom = camera.zoom
+	print("相机缩放:"+str(zoom))
+	var scaled_rect = Rect2(
+		viewport_rect.position / zoom,
+		viewport_rect.size / zoom
+	)
+	# 检查坐标是否在矩形内
+	return scaled_rect.has_point(node_in_cam_space)
+
+#节点是否在屏幕内
+func is_on_screen(node: Node2D) -> bool:
+	# 获取视口
+	var viewport = get_viewport()
+	
+	# 获取节点的全局位置
+	var node_pos = node.global_position
+	
+	# 转换为屏幕坐标
+	var screen_pos = viewport.get_canvas_transform() * node_pos
+	
+	# 检查是否在视口范围内
+	var viewport_rect = Rect2(Vector2.ZERO, viewport.size)
+	return viewport_rect.has_point(screen_pos)

@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvcvxmg51bexh"]
+[gd_scene load_steps=6 format=3 uid="uid://bvcvxmg51bexh"]
 
 [ext_resource type="Texture2D" uid="uid://fap4vl4v2fso" path="res://Tiles.png" id="1_0fnvj"]
 [ext_resource type="Script" uid="uid://dmws1giy6so3x" path="res://Scene/honeycomb.gd" id="1_uxby8"]
+[ext_resource type="Script" uid="uid://bug36epr8xs2f" path="res://Scene/bee_calm_area.gd" id="3_a5op5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uxby8"]
 size = Vector2(34, 53)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a5op5"]
+size = Vector2(234, 98)
 
 [node name="honeycomb" type="Area2D"]
 script = ExtResource("1_uxby8")
@@ -20,6 +24,15 @@ position = Vector2(0, -5.5)
 shape = SubResource("RectangleShape2D_uxby8")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="bee_calm_area" type="Area2D" parent="."]
+position = Vector2(-0.115, 0)
+collision_mask = 2
+script = ExtResource("3_a5op5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bee_calm_area"]
+position = Vector2(12.115, -26)
+shape = SubResource("RectangleShape2D_a5op5")
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

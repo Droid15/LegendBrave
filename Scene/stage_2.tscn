@@ -1810,7 +1810,7 @@ set_item = "Potion_v1"
 
 [node name="item_box2" parent="TileMap" instance=ExtResource("11_pp7nt")]
 position = Vector2(549, -102)
-set_item = "Skill_v1"
+set_item = "Potion_v2"
 
 [node name="item_box3" parent="TileMap" instance=ExtResource("11_pp7nt")]
 position = Vector2(1790, -423)
@@ -1818,7 +1818,7 @@ set_item = "Potion_v2"
 
 [node name="item_box4" parent="TileMap" instance=ExtResource("11_pp7nt")]
 position = Vector2(332, 43)
-set_item = "Coin_v2"
+set_item = "Skill_v1"
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="TileMap"]
 layer = 1
@@ -1920,7 +1920,8 @@ limit_right = 2126
 limit_bottom = 220
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
-drag_top_margin = 0.6
+drag_left_margin = 0.0
+drag_top_margin = 0.16
 editor_draw_drag_margin = true
 
 [node name="BGM" type="AudioStreamPlayer2D" parent="."]
