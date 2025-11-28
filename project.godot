@@ -20,6 +20,10 @@ config/icon="uid://bm8eq0fsdagfy"
 Bgm="*res://Script/bgm.gd"
 SceneMaster="*res://Scene/scene_master.tscn"
 
+[compression]
+
+formats/zstd/long_distance_matching=true
+
 [display]
 
 window/size/viewport_width=384

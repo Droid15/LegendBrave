@@ -1,10 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqh1kw60jmjwa"]
+[gd_scene load_steps=14 format=3 uid="uid://cqh1kw60jmjwa"]
 
 [ext_resource type="Script" uid="uid://b6x1r1yu7a1kf" path="res://Script/enemy_boss_bee.gd" id="1_v1oyd"]
 [ext_resource type="Texture2D" uid="uid://bbevh3pxpj55u" path="res://Fly-Sheet-bee.png" id="2_16p6v"]
+[ext_resource type="Script" uid="uid://coo8safstkeub" path="res://Script/Hitbox.gd" id="3_4n6ci"]
 [ext_resource type="Texture2D" uid="uid://brxlieilvvwef" path="res://Hit-Sheet-bee.png" id="3_airav"]
+[ext_resource type="Script" uid="uid://beaaf3nmqdgrj" path="res://Script/Hurtbox.gd" id="4_a5j4p"]
+[ext_resource type="Script" uid="uid://yl833kojtvdf" path="res://Script/Stats.gd" id="6_de6kr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mdgus"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_airav"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_de6kr"]
 
 [sub_resource type="Animation" id="Animation_4n6ci"]
 length = 0.001
@@ -125,6 +132,8 @@ _data = {
 }
 
 [node name="EnemyBossBee" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 8
 script = ExtResource("1_v1oyd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -136,7 +145,29 @@ shape = SubResource("CircleShape2D_mdgus")
 texture = ExtResource("2_16p6v")
 hframes = 4
 
+[node name="Hitbox" type="Area2D" parent="Graphics"]
+collision_mask = 8
+script = ExtResource("3_4n6ci")
+
+[node name="coll" type="CollisionShape2D" parent="Graphics/Hitbox"]
+shape = SubResource("CircleShape2D_airav")
+
+[node name="Hurtbox" type="Area2D" parent="Graphics"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("4_a5j4p")
+metadata/_custom_type_script = "uid://beaaf3nmqdgrj"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Graphics/Hurtbox"]
+shape = SubResource("CircleShape2D_de6kr")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_a5j4p")
 }
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("6_de6kr")
+metadata/_custom_type_script = "uid://yl833kojtvdf"
+
+[connection signal="hurt" from="Graphics/Hurtbox" to="." method="_on_hurtbox_hurt"]

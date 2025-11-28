@@ -48,7 +48,7 @@ var pending_damage: Damage
 @onready var score_layer: Label = $CanvasLayer/Score
 @onready var human_charge_1: AudioStreamPlayer = $"08HumanCharge1"
 @onready var man_hurt: AudioStreamPlayer = $ManHurt
-@onready var camera_2d: Camera2D = $Camera2D
+@onready var camera_2d: Camera2D = $"Camera2D"
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -101,7 +101,8 @@ func tick_physics(state: State, delta: float) -> void:
 	else:
 		modulate.a = 1
 	#跌落死亡
-	if position.y > 380:
+	if position.y > 400:
+		print("跌落死亡",position.y)
 		stats.health -= 1
 		
 	match state:
@@ -145,7 +146,10 @@ func stand(gravity_s: float, delta: float) -> void:
 #payer死亡
 func die() -> void:
 	#重载当前游戏场景
-	get_tree().reload_current_scene()
+	if "stage_boss" == get_tree().current_scene.name:
+		SceneMaster.change_scene("res://Scene/stage_2.tscn", "0.0")
+	else:
+		get_tree().reload_current_scene()
 	health_reset()
 	score_reset()
 	skill_reset()

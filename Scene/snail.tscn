@@ -495,3 +495,4 @@ wait_time = 2.5
 stream = ExtResource("7_cujuc")
 
 [connection signal="hurt" from="Graphics/Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="timeout" from="CalmDownTimer" to="." method="_on_calm_down_timer_timeout"]

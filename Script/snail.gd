@@ -13,6 +13,7 @@ enum State {
 var pending_damage: Damage
 const KNOCKBACK_AMOUNT := 512.0
 var damage_limit := 0
+var cooling := false
 
 @onready var wall_checker: RayCast2D = $Graphics/WallChecker
 @onready var player_checker: RayCast2D = $Graphics/PlayerChecker
@@ -35,11 +36,7 @@ func tick_physics(state: State, delta: float) -> void:
 			if not floor_checker.is_colliding():
 				direction *= -1
 			move(max_speed / 3, delta)
-			
-			#玩家在野猪视野范围内就启动冷静时间（2.5s）
-			if player_checker.is_colliding():
-				calm_down_timer.start()
-
+				
 func get_next_state(state: State) -> int:
 	#血量为0，死亡
 	if stats.health == 0:
@@ -60,8 +57,6 @@ func get_next_state(state: State) -> int:
 	#视线看到玩家
 	if player_checker.is_colliding():
 		return State.SHY
-		#return State.RUN
-		
 		
 	match state:
 		State.IDLE:
@@ -75,8 +70,16 @@ func get_next_state(state: State) -> int:
 				return State.IDLE
 		State.SHY:
 			#冷静倒数时间结束就走
-			if calm_down_timer.is_stopped():
-				return State.WALK
+			#if calm_down_timer.is_stopped():
+				#return State.WALK
+			if not player_checker.is_colliding():
+				print("蜗牛羞,玩家不在视线....")
+				if cooling and not calm_down_timer.is_stopped():
+					return State.SHY
+				cooling = true
+				calm_down_timer.start()
+				print("开始冷静")
+			return State.WALK
 		State.HURT:
 			if not is_on_floor():
 				return State.FALL
@@ -130,3 +133,8 @@ func _on_hurtbox_hurt(hitbox: HitBox) -> void:
 	pending_damage = Damage.new()
 	pending_damage.amount = 1
 	pending_damage.source = hitbox.owner
+
+
+func _on_calm_down_timer_timeout() -> void:
+	cooling = false
+	print("冷静结束......")
