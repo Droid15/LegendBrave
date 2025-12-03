@@ -3,6 +3,8 @@ extends Node2D
 @onready var player: Player = $"../Player"
 @onready var timer: Timer = $"../Timer"
 @onready var stats: Stats = $Stats
+@onready var atk_sword_3: AudioStreamPlayer = $"17OrcAtkSword3"
+@onready var canvas_layer: CanvasLayer = $"../CanvasLayer"
 
 var boss_default_pos:Vector2
 var health := 12
@@ -28,7 +30,9 @@ var flash := false
 
 func _ready() -> void:
 	boss_default_pos = position
-
+	stats.max_health = health
+	stats.health = health
+	
 func _physics_process(delta: float) -> void:
 	if flash:
 		boss_flash()
@@ -66,6 +70,8 @@ func _on_hurtbox_hurt(hitbox: Variant) -> void:
 	pending_damage.amount = 1
 	pending_damage.source = hitbox.owner
 	health -= 1
+	stats.health -= 1
+	atk_sword_3.play()
 	#击退
 	shuld_attack = false
 	
@@ -74,8 +80,11 @@ func _on_hurtbox_hurt(hitbox: Variant) -> void:
 	await  get_tree().create_timer(1.5).timeout
 	flash = false
 	modulate.a = 1.0
-	
+	print("boss状态：",stats.health)
 	if health<=0:
 		print("boss死亡")
 		timer.stop()
+		SceneMaster.victory = true
+		canvas_layer.show()
+		player.animation_player.stop()
 		queue_free()

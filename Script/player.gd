@@ -52,7 +52,7 @@ var pending_damage: Damage
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if SceneMaster.stats.health == 0:
+	if SceneMaster.stats.health == 0 or SceneMaster.victory:
 		#print("死亡时不能操作")
 		return 
 	#监听技能释放
@@ -90,7 +90,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func tick_physics(state: State, delta: float) -> void:
 	#更新实时玩家坐标
 	SceneMaster.player_pos = position
-	
+	if SceneMaster.stats.health == 0 or SceneMaster.victory:
+		#print("死亡时不能操作")
+		return 
 	#技能震动
 	if skill_time:
 		SceneMaster.quake(2, delta)
@@ -147,7 +149,7 @@ func stand(gravity_s: float, delta: float) -> void:
 func die() -> void:
 	#重载当前游戏场景
 	if "stage_boss" == get_tree().current_scene.name:
-		SceneMaster.change_scene("res://Scene/stage_2.tscn", "0.0")
+		SceneMaster.change_scene("res://Scene/stage_3.tscn", "0.0")
 	else:
 		get_tree().reload_current_scene()
 	health_reset()

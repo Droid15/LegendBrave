@@ -11,10 +11,10 @@ func _ready() -> void:
 	timer.wait_time = reay_time
 	timer.start()
 	
-func _physics_process(delta: float) -> void:
-	if randf()>0.6 and timer.wait_time <= 2:
-		enemy_boss_bee.player_pos_tmp.x = SceneMaster.player_pos.x
-		enemy_boss_bee.player_pos_tmp.y = SceneMaster.player_pos.y - 26 
+#func _physics_process(delta: float) -> void:
+	#if randf()>0.6 and timer.wait_time <= 2:
+		#enemy_boss_bee.player_pos_tmp.x = SceneMaster.player_pos.x
+		#enemy_boss_bee.player_pos_tmp.y = SceneMaster.player_pos.y - 26 
 		
 func _on_timer_timeout() -> void:
 	print("攻击...")

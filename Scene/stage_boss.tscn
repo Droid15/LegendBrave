@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://d2prdyvai71w6"]
+[gd_scene load_steps=11 format=4 uid="uid://d2prdyvai71w6"]
 
 [ext_resource type="Texture2D" uid="uid://8jekgmayjfj6" path="res://Tree-Assets.png" id="1_m6kxu"]
 [ext_resource type="Script" uid="uid://bgxtnnrtcanyf" path="res://Scene/stage_boss.gd" id="1_xp8yl"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://g63v5gcescix" path="res://Scene/player.tscn" id="3_ahadg"]
 [ext_resource type="PackedScene" uid="uid://cqh1kw60jmjwa" path="res://Scene/enemy_boss_bee.tscn" id="4_6hhpg"]
 [ext_resource type="AudioStream" uid="uid://crbgg1nlpdj87" path="res://27 14 BOSS fixing LOOP.mp3" id="6_n6xcx"]
+[ext_resource type="PackedScene" uid="uid://uvekcy5gp7cg" path="res://Scene/item_box.tscn" id="7_8mi6r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f3omy"]
 texture = ExtResource("1_m6kxu")
@@ -804,5 +805,20 @@ autoplay = true
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
+
+[node name="item_box" parent="." instance=ExtResource("7_8mi6r")]
+position = Vector2(529, 101)
+set_item = "Potion_v1"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+modulate = Color(1, 0.498039, 0.117647, 1)
+offset_left = 164.0
+offset_top = 86.0
+offset_right = 225.0
+offset_bottom = 109.0
+text = "You win!"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -22,6 +22,8 @@ var skill_cooldown := 3
 
 var bee_await:bool = false
 
+var victory:bool = false
+
 func _ready() -> void:
 	color_rect.color.a = 0
 
